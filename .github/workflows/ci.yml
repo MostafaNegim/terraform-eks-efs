@@ -12,7 +12,8 @@ jobs:
     steps:
       - shell: bash
         run: |
-          echo "Hello-world"
+          ls -al
+          pwd
   init:
     runs-on: ubuntu-latest
     steps:
