@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
     
@@ -25,4 +25,10 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        # if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
   
