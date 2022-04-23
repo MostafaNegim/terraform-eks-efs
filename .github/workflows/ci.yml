@@ -3,9 +3,18 @@ name: Terraform Lint
 on: push
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
         run: |
           echo "Hello-world"
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hashicorp/setup-terraform@v2
+    
+      - name: Terraform fmt
+        id: fmt
+        run: terraform init
+  
