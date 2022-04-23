@@ -2,6 +2,10 @@ name: Terraform Lint
 
 on: push
 
+defaults:
+  run:
+    working-directory: ${{ env.tf_actions_working_dir }}
+    
 jobs:
   test:
     runs-on: ubuntu-latest
