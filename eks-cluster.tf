@@ -16,21 +16,21 @@ module "eks" {
       name                          = "system-pod"
       instance_type                 = "t2.small"
       additional_userdata           = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
+      additional_security_group_ids = [aws_security_group.system_pod.id]
       asg_desired_capacity          = 1
     },
     {
       name                          = "cpu-application"
       instance_type                 = "t2.medium"
       additional_userdata           = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
+      additional_security_group_ids = [aws_security_group.cpu_application.id]
       asg_desired_capacity          = 1
     },
     {
       name                          = "gpu-application"
       instance_type                 = "t2.medium"
       additional_userdata           = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
+      additional_security_group_ids = [aws_security_group.gpu_application.id]
       asg_desired_capacity          = 1
     },
   ]
