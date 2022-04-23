@@ -4,11 +4,14 @@ on: push
 
 
 jobs:
-  init:
+  terraform:
     runs-on: ubuntu-latest
     steps:
-      - uses: hashicorp/setup-terraform@v2
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
     
       - name: Terraform fmt
         id: fmt
