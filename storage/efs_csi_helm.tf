@@ -19,7 +19,7 @@ resource "helm_release" "efs-csi-driver" {
   
   set {
     name  = "controller.serviceAccount.create"
-    value = false
+    value = true
   }
   # set {
   #   name  = "controller.serviceAccount.name"
