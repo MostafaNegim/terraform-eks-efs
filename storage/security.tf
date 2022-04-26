@@ -1,20 +1,23 @@
-# resource "aws_security_group" "ingress-efs-test" {
-#    name = "ingress-efs-test-sg"
-#    vpc_id = "${aws_vpc.test-env.id}"
+resource "aws_security_group" "ingress_efs" {
+   name = "ingress-efs-sg"
+   vpc_id = data.aws_vpc.eks_vpc.id
 
-#    // NFS
-#    ingress {
-#      security_groups = ["${aws_security_group.ingress-test-env.id}"]
-#      from_port = 2049
-#      to_port = 2049
-#      protocol = "tcp"
-#    }
+   // NFS
+   ingress {
+    #  security_groups = ["${aws_security_group.ingress-test-env.id}"]
+     from_port = 2049
+     to_port = 2049
+     protocol = "tcp"
+     cidr_blocks      = [data.aws_vpc.eks_vpc.cidr_block]
+   }
+   tags = {
+     "Name" = "ingress-efs-sg"
+   }
+ }
 
-#    // Terraform removes the default rule
-#    egress {
-#      security_groups = ["${aws_security_group.ingress-test-env.id}"]
-#      from_port = 0
-#      to_port = 0
-#      protocol = "-1"
-#    }
-#  }
+data "aws_vpc" "eks_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["omni-vpc"]
+  }
+}
