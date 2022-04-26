@@ -10,7 +10,7 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "efs-csi-driver" {
+resource "helm_release" "efs_csi_driver" {
   name       = "aws-efs-csi-driver"
 
   repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver"
@@ -19,11 +19,11 @@ resource "helm_release" "efs-csi-driver" {
   
   set {
     name  = "controller.serviceAccount.create"
-    value = true
+    value = false
   }
-  # set {
-  #   name  = "controller.serviceAccount.name"
-  #   value = "efs-csi-controller-sa"
-  # }
+  set {
+    name  = "controller.serviceAccount.name"
+    value = "efs-csi-controller-sa"
+  }
 }
 
