@@ -1,7 +1,7 @@
-resource "aws_iam_policy" "name" {
-  name = "AmazonEKS_EFS_CSI_Driver_Policy "
+resource "aws_iam_policy" "efs" {
+  name = "AmazonEKS-EFS-CSI-Driver-Policy"
   description = ""
-  policy = jsoncode(
+  policy = jsonencode(
     {
     "Version": "2012-10-17",
     "Statement": [
@@ -37,5 +37,11 @@ resource "aws_iam_policy" "name" {
       }
     ]
   })
-}
-
+  
+  provisioner "local-exec" {
+    command ="eksctl utils associate-iam-oidc-provider --cluster ${data.aws_eks_cluster.cluster.name} --approve"
+  }
+  provisioner "local-exec" {
+    command ="eksctl create iamserviceaccount --cluster ${data.aws_eks_cluster.cluster.name} --namespace kube-system --name efs-csi-controller-sa --attach-policy-arn ${self.arn} --approve"   
+  }
+} 
