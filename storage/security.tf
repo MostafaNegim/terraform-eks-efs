@@ -10,6 +10,12 @@ resource "aws_security_group" "ingress_efs" {
      protocol = "tcp"
      cidr_blocks      = [data.aws_vpc.eks_vpc.cidr_block]
    }
+    egress {
+      from_port       = 0
+      to_port         = 0
+      protocol        = "-1"
+      cidr_blocks     = ["0.0.0.0/0"]
+    }
    tags = {
      "Name" = "ingress-efs-sg"
    }
@@ -18,6 +24,6 @@ resource "aws_security_group" "ingress_efs" {
 data "aws_vpc" "eks_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["omni-vpc"]
+    values = [data.terraform_remote_state.eks.outputs.vpc_name]
   }
 }
