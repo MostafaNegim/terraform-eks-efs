@@ -13,6 +13,10 @@
 #   value = data.aws_eks_cluster.cluster
 # }
 
-output "ec2_subnets" {
-  value = data.aws_instance.ec2_subnets
+# output "ec2_subnets" {
+#   value = data.aws_instance.ec2_subnets
+# }
+
+output "storageclass" {
+  value = data.template_file.storageclass.filename
 }
