@@ -26,12 +26,29 @@ To create an encrypted EFS and attach it to the EKS cluster with its storage cla
 > * `efs_csi_helm.tf`: installs the Amazon EFS CSI driver using Helm.
 > * `security.tf`: creates a security group with an inbound rule that allows inbound NFS traffic for the Amazon EFS mount points.
 > * `efs.tf`: creates an encrypted Amazon EFS file system for the Amazon EKS cluster and creates mount targets.
-> * `storage.tf`: Deploy `StorageClass` manifest for Amazon EFS and make it default.
+> * `storage.tf`: deploys `StorageClass` manifest for Amazon EFS and makes it default and the other storageclass non-default.
 
+```yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: "${fileSystemId}"
+  directoryPerms: "700"
+  gidRangeStart: "1000" # optional
+  gidRangeEnd: "2000" # optional
+  basePath: "/dynamic_provisioning" # optional
+ ``` 
 ### Deploy a sample application
-
+To test the storageclass is working correctly a sample pod with a pvc attached to it could be deployed that dynamically creates a persistent volume:
+> * `deploy_sample.pvc` : it applies a pod definition with a pvc attached.
 # How to run
-Follow these steps to run these scripts, please. It is assumed that, `kubectl`, `eksctl` and `aws cli` have been installed on the machine running these scripts.
+Follow these steps to run these scripts, please. It is assumed that, `kubectl`, `eksctl` and `aws cli` have been installed on the machine running these scripts. Avoiding installing `kubectl` and `aws` is possible using module like `kubectl`, however, installing `eksctl` is necessary.
 1. *Install vpc and eks cluster* : 
     1. `cd eks`
     1. `terraform init`
@@ -48,4 +65,4 @@ Follow these steps to run these scripts, please. It is assumed that, `kubectl`, 
 
  
 # Notes
-1. local backend is used for these scripts for the sake of simplicity. A s3 backend with the dynamoDB is better solution for the production use.
+1. local backend is used for these scripts for the sake of simplicity. A s3 backend with the dynamoDB is better solution for the production use cases.
