@@ -31,6 +31,21 @@ To create an encrypted EFS and attach it to the EKS cluster with its storage cla
 ### Deploy a sample application
 
 # How to run
+Follow these steps to run these scripts, please. It is assumed that, `kubectl`, `eksctl` and `aws cli` have been installed on the machine running these scripts.
+1. *Install vpc and eks cluster* : 
+    1. `cd eks`
+    1. `terraform init`
+    1. `terraform apply` and press `y` or `terraform apply --auto-approve`
+1. *Install ingress controller* : 
+    1. `cd nginx`
+    1. `terraform init`
+    1. `terraform apply` and press `y` or `terraform apply --auto-approve`
+1. *Install efs storage for the cluster* : 
+    1. `cd storage`
+    1. `terraform init`
+    1. `terraform apply` and press `y` or `terraform apply --auto-approve`
 
-# Notes:
-Statefile
+
+ 
+# Notes
+1. local backend is used for these scripts for the sake of simplicity. A s3 backend with the dynamoDB is better solution for the production use.
