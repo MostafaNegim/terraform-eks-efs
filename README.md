@@ -9,7 +9,7 @@ https://github.com/hashicorp/learn-terraform-provision-eks-cluster), the followi
 
 ## 2. EKS
 
-> * `eks-cluster.tf`: provisions all the resources (AutoScaling Groups, etc...) required to set up an EKS cluster using the [AWS EKS Module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/11.0.0). 3 node groups (with the private subnet) - system pod node, cpu-application node and gpu application node with desired capacity=1 has been created. *Taint* is also assigned to the nodes to allow the pods to schedule onto nodes with matching taints.
+> * `eks-cluster.tf`: provisions all the resources (AutoScaling Groups, etc...) required to set up an EKS cluster using the [AWS EKS Module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/11.0.0). 3 node groups (with the private subnet) - system pod node, cpu-application node and gpu application node with desired capacity=1 has been created. *Taint* is also assigned to the nodes to allow the pods to schedule onto nodes with matching cpu and gpu taints.
 > * `kubernetes.tf`: the Kubernetes provider is included in this file so the EKS module can complete successfully.
 ## 3. Ingress Controller
 To add ingress controller and get a public Network load balancer, [Helm Module](https://registry.terraform.io/providers/hashicorp/helm/latest/docs) and [Kubernetes-ingress-nginx](https://github.com/kubernetes/ingress-nginx) have been used. According to the [AWS](https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/) and [Hashicorp](https://learn.hashicorp.com/tutorials/terraform/helm-provider?in=terraform/use-case) documentation, the following `tf` files in the `nginx` directory have been implemented:
