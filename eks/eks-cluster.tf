@@ -21,12 +21,12 @@ module "eks" {
       desired_capacity = 1
       max_capacity     = 2
       min_capacity     = 1
-      taints = [{
-          key    = "node-type"
-          value  = "cpu"
-          effect = "NO_SCHEDULE"
-          }
-      ]
+      # taints = [{
+      #     key    = "node-type"
+      #     value  = "cpu"
+      #     effect = "NO_SCHEDULE"
+      #     }
+      # ]
       instance_type = "t2.small"
     }
     gpu_app = {
@@ -34,12 +34,12 @@ module "eks" {
       desired_capacity = 1
       max_capacity     = 2
       min_capacity     = 1
-      taints = [{
-          key    = "node-type"
-          value  = "gpu"
-          effect = "NO_SCHEDULE"
-          }
-      ]
+      # taints = [{
+      #     key    = "node-type"
+      #     value  = "gpu"
+      #     effect = "NO_SCHEDULE"
+      #     }
+      # ]
       instance_type = "t2.small"
     }
 
